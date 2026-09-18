@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Upload Automático de Fotos de Perfil
 // @namespace     http://tampermonkey.net/
-// @version       1.0.0
+// @version       1.0.1
 // @description   Automatiza o upload de fotos de perfil dos alunos (formato: CODIGOALUNO.jpg)
 // @author        Jhonatan Aquino
 // @match         https://*.sigeduca.seduc.mt.gov.br/ged/hwmconaluno.aspx*
@@ -11,6 +11,8 @@
 // @grant         GM_getValue
 // @grant         GM_addStyle
 // @require       https://code.jquery.com/jquery-3.6.0.min.js
+// @updateURL     https://raw.githubusercontent.com/Jhonatan-Aquino/uploadFotoALuno/main/Upload-Automático-de-Fotos-de-Perfil.user.js
+// @downloadURL   https://raw.githubusercontent.com/Jhonatan-Aquino/uploadFotoALuno/main/Upload-Automático-de-Fotos-de-Perfil.user.js
 // ==/UserScript==
 
 // No início do seu script (fora de qualquer função)
@@ -24,13 +26,13 @@ window.processamentoEmAndamentoUAF = false;
     GM_addStyle(`
            /* Estilos base do container principal */
         #containerUAF {
-            background: rgba(220, 220, 220, 0.58);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(214, 214, 214, 0.27);
+            background: rgba(237, 237, 237, 0.75);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(214, 214, 214, 0.5);
             border-radius: 20px;
-            color: #474e68;
+            color: #293254;
             width: auto;
             text-align: center;
             font-weight: bold;
@@ -73,7 +75,7 @@ window.processamentoEmAndamentoUAF = false;
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #087eff;
+            color: #3982f7;
             font-size: 13px;
             font-weight: normal;
             padding: 9px 20px;
@@ -112,7 +114,7 @@ window.processamentoEmAndamentoUAF = false;
         /* Botão secundário */
         #containerUAF #btnDownloadCSV {
             background-color: rgba(255, 255, 255, 0.2);
-            color: #474e68;
+            color: #293254;
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
@@ -161,13 +163,13 @@ window.processamentoEmAndamentoUAF = false;
 
         /* Estilos da div de log */
         #containerUAF .divlogUAF {
-            background: rgba(244, 244, 244, 0.8);
+            background: rgba(244, 244, 244, 0.58);
             border-radius: 16px;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0);
-            backdrop-filter: blur(6.6px);
-            -webkit-backdrop-filter: blur(6.6px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(214, 214, 214, 0.27);
-            color: #087eff;
+            color: #3982f7;
             width: auto;
             text-align: center;
             position: absolute;
@@ -201,7 +203,7 @@ window.processamentoEmAndamentoUAF = false;
             padding: 15px 20px;
             font-size: 14px;
             background: none;
-            color: #087dff;
+            color: #3982f7;
             cursor: pointer;
             border-radius: 5px;
             overflow: hidden;
@@ -216,7 +218,7 @@ window.processamentoEmAndamentoUAF = false;
             position: absolute;
             width: 56px;
             height: 56px;
-            border: 3px solid #087dff;
+            border: 3px solid #3982f7;
             border-top-color: transparent;
             border-radius: 50%;
             top: 50%;
@@ -283,7 +285,7 @@ window.processamentoEmAndamentoUAF = false;
 
         #containerUAF .progress-text {
             text-align: center;
-            color: #474e68;
+            color: #293254;
             font-size: 12px;
             font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
             padding: 5px 0;
@@ -331,7 +333,7 @@ window.processamentoEmAndamentoUAF = false;
 
         /* Estilos SVG e botões de controle */
         #containerUAF svg:hover path {
-            fill: #087dff !important;
+            fill: #3982f7 !important;
         }
 
         #containerUAF .btnscontrole {
@@ -340,7 +342,7 @@ window.processamentoEmAndamentoUAF = false;
         }
 
         #containerUAF .btnscontrole:hover path {
-            fill: #087dff !important;
+            fill: #3982f7 !important;
         }
 
         /* Animações */
@@ -368,7 +370,7 @@ window.processamentoEmAndamentoUAF = false;
         btnExibir.type = 'button';
         btnExibir.id = 'exibirUAF';
         btnExibir.className = 'menuSCT';
-        btnExibir.style.backgroundColor = "#474e68";
+        btnExibir.style.backgroundColor = "#293254";
         btnExibir.style.color = "#ffffff";
         btnExibir.style.fontSize = "12px";
         btnExibir.style.border = "none";
@@ -436,7 +438,7 @@ window.processamentoEmAndamentoUAF = false;
                 - Em caso de erro, verifique a mensagem no log<br>
                 - O relatório final mostrará detalhes de cada upload</p>
             </div>
-            <div class="containerUAF" style="color: #474e68;">
+            <div class="containerUAF" style="color: #293254;">
                 <div>
                     <span style='font-size:8pt;font-weight:normal;font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif !important;'><a href="https://github.com/Jhonatan-Aquino/" target="_blank" style="text-color:rgb(71, 78, 104) !important;  text-decoration: none !important;">< Jhonatan Aquino /></a></span>
                     <br>
@@ -459,7 +461,7 @@ window.processamentoEmAndamentoUAF = false;
 
         // Configurar eventos
         btnExibir.onmouseover = () => btnExibir.style.backgroundColor = "#3982F7";
-        btnExibir.onmouseout = () => btnExibir.style.backgroundColor = "#474e68";
+        btnExibir.onmouseout = () => btnExibir.style.backgroundColor = "#293254";
         btnExibir.onclick = function() {
             const novoEstado = this.value === "MINIMIZAR" ? "fechado" : "aberto";
             $("#containerUAF").slideToggle();
@@ -697,7 +699,7 @@ window.processamentoEmAndamentoUAF = false;
             }
         }
 
-        async addLog(mensagem, tempo = 3000, cor = '#087eff') {
+        async addLog(mensagem, tempo = 3000, cor = '#3982f7') {
             if (!this.divLog) {
                 this.init();
             }
@@ -745,7 +747,7 @@ window.processamentoEmAndamentoUAF = false;
     const logManager = new LogManager();
 
     // Função auxiliar de exibição de log
-    function exibirLog(mensagem, tempo = 3000, cor = '#087eff') {
+    function exibirLog(mensagem, tempo = 3000, cor = '#3982f7') {
         if (logManager) {
             logManager.addLog(mensagem, tempo, cor);
         } else {
@@ -931,7 +933,7 @@ window.processamentoEmAndamentoUAF = false;
                 throw new Error('Campo de upload de foto não encontrado');
             }
 
-            exibirLog(`Iniciando upload de ${fileInfo.fileName}...`, CONFIG.TEMPO_ESPERA_PADRAO, '#087eff');
+            exibirLog(`Iniciando upload de ${fileInfo.fileName}...`, CONFIG.TEMPO_ESPERA_PADRAO, '#3982f7');
 
             // Criar DataTransfer e adicionar o arquivo
             const dataTransfer = new DataTransfer();
