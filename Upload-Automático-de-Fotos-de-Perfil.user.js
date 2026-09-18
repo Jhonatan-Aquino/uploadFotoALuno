@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Upload Automático de Fotos de Perfil
 // @namespace     http://tampermonkey.net/
-// @version       1.0.0
+// @version       1.0.1
 // @description   Automatiza o upload de fotos de perfil dos alunos (formato: CODIGOALUNO.jpg)
 // @author        Jhonatan Aquino
 // @match         https://*.sigeduca.seduc.mt.gov.br/ged/hwmconaluno.aspx*
@@ -11,6 +11,8 @@
 // @grant         GM_getValue
 // @grant         GM_addStyle
 // @require       https://code.jquery.com/jquery-3.6.0.min.js
+// @updateURL     https://raw.githubusercontent.com/Jhonatan-Aquino/uploadFotoALuno/main/Upload-Automático-de-Fotos-de-Perfil.user.js
+// @downloadURL   https://raw.githubusercontent.com/Jhonatan-Aquino/uploadFotoALuno/main/Upload-Automático-de-Fotos-de-Perfil.user.js
 // ==/UserScript==
 
 // No início do seu script (fora de qualquer função)
